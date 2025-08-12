@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.85em;
+            height: 14px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <form id="contactForm" novalidate>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+            <small class="error" id="nameError"></small>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+            <small class="error" id="emailError"></small>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Type your message"></textarea>
+            <small class="error" id="messageError"></small>
+
+            <button type="submit">Submit</button>
+        </form>
+        <p id="successMessage" class="success"></p>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            let isValid = true;
+
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Get error message elements
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const messageError = document.getElementById('messageError');
+            const successMessage = document.getElementById('successMessage');
+
+            // Clear previous messages
+            nameError.textContent = '';
+            emailError.textContent = '';
+            messageError.textContent = '';
+            successMessage.textContent = '';
+
+            // Validate Name
+            if (name === '') {
+                nameError.textContent = 'Name is required';
+                isValid = false;
+            }
+
+            // Validate Email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '') {
+                emailError.textContent = 'Email is required';
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                emailError.textContent = 'Enter a valid email address';
+                isValid = false;
+            }
+
+            // Validate Message
+            if (message === '') {
+                messageError.textContent = 'Message cannot be empty';
+                isValid = false;
+            }
+
+            // If valid, show success
+            if (isValid) {
+                successMessage.textContent = '✅ Form submitted successfully!';
+                document.getElementById('contactForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
